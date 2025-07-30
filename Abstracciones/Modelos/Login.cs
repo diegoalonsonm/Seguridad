@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Abstracciones.Modelos
 {
-    public class Usuario
+    public class Login
     {
         [Required]
         public Guid IdUsuario { get; set; }
@@ -21,5 +21,6 @@ namespace Abstracciones.Modelos
         [Required]
         [EmailAddress]
         public string Correo { get; set; }
+        public Guid IdServicio { get; set; } 
     }
 }

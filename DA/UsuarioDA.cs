@@ -34,8 +34,8 @@ namespace DA
             string sqlQuery = @"[ObtenerUsuario]";
             var consulta = await _conexion.QueryAsync<Abstracciones.Entidades.Usuario>(sqlQuery, new
             {
-                correo = usuario.Correo,
-                nombre = usuario.Nombre
+                CorreoElectronico = usuario.Correo,
+                NombreUsuario = usuario.Nombre
             });
 
             return Convertidor.Convertir<Abstracciones.Entidades.Usuario, Abstracciones.Modelos.Usuario>(consulta.FirstOrDefault());

@@ -1,5 +1,7 @@
+using Abstracciones.BC;
 using Abstracciones.BW;
 using Abstracciones.DA;
+using BC;
 using BW;
 using DA;
 using DA.Repositorios;
@@ -15,6 +17,9 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IUsuarioBW, UsuarioBW>();
 builder.Services.AddScoped<IUsuarioDA, UsuarioDA>();
+builder.Services.AddScoped<IAutenticacionBW, AutenticacionBW>();
+builder.Services.AddScoped<IAutenticacionBC, AutenticacionBC>();
+
 builder.Services.AddScoped<IRepositorioDapper, RepositorioDapper>();
 
 var app = builder.Build();
