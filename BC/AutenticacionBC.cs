@@ -48,10 +48,11 @@ namespace BC
         {
             Usuario usuario = await _usuarioDA.ObtenerUsuario(new Usuario
             {
-                Nombre = login.Nombre,
-                Correo = login.Correo
+                nombre = login.nombre,
+                correo = login.correo
             });
-            return (login != null && login.PasswordHash == usuario.PasswordHash);
+            
+            return (login != null && login.passwordHash == usuario.passwordHash);
         }
 
         private async Task<JwtSecurityToken> GenerarTokenJWT(Login login, TokenConfig tokenConfig)
@@ -74,7 +75,7 @@ namespace BC
         private async Task<List<Claim>> GeneralClaims(Login login)
         {
             List<Claim> claims = new List<Claim>();
-            claims.Add(new Claim("usuario", login.Nombre));
+            claims.Add(new Claim("usuario", login.nombre));
             claims.Add(new Claim("servicio", login.IdServicio.ToString()));
 
             IEnumerable<Perfil> perfiles = await ObtenerPerfiles(login);
@@ -91,10 +92,10 @@ namespace BC
         {
             return await _usuarioDA.ObtenerPerfilesPorUsuario(new Usuario
             {
-                IdUsuario = login.IdUsuario,
-                Nombre = login.Nombre,
-                PasswordHash = login.PasswordHash,
-                Correo = login.Correo
+                idUsuario = login.idUsuario,
+                nombre = login.nombre,
+                passwordHash = login.passwordHash,
+                correo = login.correo
             });
         }
     }

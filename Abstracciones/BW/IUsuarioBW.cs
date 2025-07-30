@@ -10,5 +10,6 @@ namespace Abstracciones.BW
     public interface IUsuarioBW
     {
         Task<Guid> RegistrarUsuario(Usuario usuario);
+        Task<Usuario> ObtenerUsuario(Usuario usuario);
     }
 }

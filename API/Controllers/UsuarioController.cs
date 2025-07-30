@@ -18,6 +18,13 @@ namespace API.Controllers
             _usuarioBW = usuarioBW;
         }
 
+        [Authorize(Roles = "2")]
+        [HttpPost("ObtenerUsuario")]
+        public async Task<IActionResult> ObtenerUsuario([FromBody] Usuario usuario)
+        {
+            return Ok(await _usuarioBW.ObtenerUsuario(usuario));
+        }
+
         [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> PostAsync([FromBody] Usuario usuario)

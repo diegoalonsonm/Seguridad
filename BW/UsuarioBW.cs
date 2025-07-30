@@ -18,6 +18,11 @@ namespace BW
             _usuarioDA = usuarioDA;
         }
 
+        public async Task<Usuario> ObtenerUsuario(Usuario usuario)
+        {
+            return await _usuarioDA.ObtenerUsuario(usuario);
+        }
+
         public async Task<Guid> RegistrarUsuario(Usuario usuario)
         {
             return await _usuarioDA.RegistrarUsuario(usuario);

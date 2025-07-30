@@ -10,17 +10,17 @@ namespace Abstracciones.Modelos
     public class Login
     {
         [Required]
-        public Guid IdUsuario { get; set; }
+        public Guid idUsuario { get; set; }
 
         [Required]
-        public string Nombre { get; set; }
+        public string nombre { get; set; }
 
         [Required]
-        public string PasswordHash { get; set; }
+        public string passwordHash { get; set; }
 
         [Required]
         [EmailAddress]
-        public string Correo { get; set; }
+        public string correo { get; set; }
         public Guid IdServicio { get; set; } 
     }
 }

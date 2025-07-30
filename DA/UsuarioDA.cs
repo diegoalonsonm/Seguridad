@@ -22,8 +22,8 @@ namespace DA
             string sqlQuery = @"[ObtenerPerfilesPorUsuario]";
             var consulta = await _conexion.QueryAsync<Abstracciones.Entidades.Perfil>(sqlQuery, new
             {
-                correo = usuario.Correo,
-                nombre = usuario.Nombre,
+                correo = usuario.correo,
+                nombre = usuario.nombre,
             });
 
             return Convertidor.ConvertirLista<Abstracciones.Entidades.Perfil, Abstracciones.Modelos.Perfil>(consulta);
@@ -34,8 +34,8 @@ namespace DA
             string sqlQuery = @"[ObtenerUsuario]";
             var consulta = await _conexion.QueryAsync<Abstracciones.Entidades.Usuario>(sqlQuery, new
             {
-                CorreoElectronico = usuario.Correo,
-                NombreUsuario = usuario.Nombre
+                correo = usuario.correo,
+                nombre = usuario.nombre
             });
 
             return Convertidor.Convertir<Abstracciones.Entidades.Usuario, Abstracciones.Modelos.Usuario>(consulta.FirstOrDefault());
@@ -46,9 +46,9 @@ namespace DA
             string sql = @"[agregarUsuario]";
             Guid consulta = await _conexion.ExecuteScalarAsync<Guid>(sql, new
             {
-                nombre = usuario.Nombre,
-                passwordHash = usuario.PasswordHash,
-                correo = usuario.Correo
+                nombre = usuario.nombre,
+                passwordHash = usuario.passwordHash,
+                correo = usuario.correo
             });
 
             return consulta;
