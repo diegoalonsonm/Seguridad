@@ -8,4 +8,4 @@ BEGIN
 
     SELECT idUsuario, nombre, passwordHash, correo, fechaCreacion, fechaModificacion, usuarioCrea, usuarioModifica FROM Usuario WHERE (@nombre IS NULL OR nombre = @nombre) 
 	AND (@correo IS NULL OR correo = @correo);
-END
+END 
