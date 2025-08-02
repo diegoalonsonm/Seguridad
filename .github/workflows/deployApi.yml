@@ -37,7 +37,7 @@ jobs:
 
       - name: Restore dependencies
         run: |
-          cd "API"
+          cd "Seguridad"
           dotnet restore "API/API.csproj"
           dotnet restore "Abstracciones/Abstracciones.csproj"
           dotnet restore "BC/BC.csproj"
@@ -47,7 +47,7 @@ jobs:
 
       - name: Build with dotnet (excluding BD project)
         run: |
-          cd "API"
+          cd "Seguridad"
           dotnet restore "API/API.csproj" --configuration Release --no-restore
           dotnet restore "Abstracciones/Abstracciones.csproj" --configuration Release --no-restore
           dotnet restore "BC/BC.csproj" --configuration Release --no-restore
