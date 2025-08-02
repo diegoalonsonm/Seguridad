@@ -39,8 +39,10 @@ jobs:
 
       - name: Add GitHub Packages NuGet source
         run: |
-          dotnet nuget add source "https://nuget.pkg.github.com/diegoalonsonm/index.json" \
-            --name "paquetes" --username diegoalonsonm --password ${{ secrets.PACKAGE_TOKEN }} --store-password-in-clear-text
+          if ! dotnet nuget list source | grep -q "https://nuget.pkg.github.com/diegoalonsonm/index.json"; then
+            dotnet nuget add source "https://nuget.pkg.github.com/diegoalonsonm/index.json" \
+              --name "paquetes" --username diegoalonsonm --password ${{ secrets.PACKAGE_TOKEN }} --store-password-in-clear-text
+          fi
 
       - name: Restore dependencies
         run: |
