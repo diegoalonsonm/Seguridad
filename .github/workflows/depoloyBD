@@ -1,0 +1,65 @@
+name: Deploy Database to Azure SQL
+
+env:
+  AZURE_SQL_SERVER: sqlserverdanm.database.windows.net
+  AZURE_SQL_DATABASE: seguridad
+  DACPAC_PATH: 'BD/bin/Release/BD.dacpac'
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'BD/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-deploy-database:
+    runs-on: windows-latest
+    environment:
+      name: 'Production-Database'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Setup NuGet
+        uses: NuGet/setup-nuget@v1
+
+      - name: Restore NuGet packages
+        run: nuget restore "Seguridad.sln"
+
+      - name: Build Database Project
+        run: |
+          msbuild "BD/BD.sqlproj" /p:Configuration=Release /p:Platform="Any CPU" /p:OutputPath="./bin/Release/"
+        shell: cmd
+
+      - name: Verify DACPAC file exists
+        run: |
+          if (Test-Path "${{ env.DACPAC_PATH }}") {
+            Write-Host "DACPAC file found at ${{ env.DACPAC_PATH }}"
+            Get-Item "${{ env.DACPAC_PATH }}" | Format-List
+          } else {
+            Write-Error "DACPAC file not found at ${{ env.DACPAC_PATH }}"
+            exit 1
+          }
+        shell: powershell
+
+      - name: Deploy to Azure SQL Database
+        uses: azure/sql-action@v2
+        with:
+          connection-string: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
+          path: ${{ env.DACPAC_PATH }}
+          action: 'publish'
+          arguments: '/p:DropObjectsNotInSource=false /p:BlockOnPossibleDataLoss=true /p:IgnoreRoleMembership=true'
+
+      - name: Database Deployment Summary
+        run: |
+          Write-Host "Database deployment completed successfully!"
+          Write-Host "Target Server: ${{ env.AZURE_SQL_SERVER }}"
+          Write-Host "Target Database: ${{ env.AZURE_SQL_DATABASE }}"
+        shell: powershell
