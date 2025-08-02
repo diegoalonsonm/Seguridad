@@ -39,8 +39,7 @@ jobs:
 
       - name: Generate dynamic NuGet.config with GitHub Packages credentials
         run: |
-          cat > NuGet.config <<EOF
-            <?xml version="1.0" encoding="utf-8"?>
+          echo '<?xml version="1.0" encoding="utf-8"?>
             <configuration>
               <packageSources>
                 <add key="github" value="https://nuget.pkg.github.com/diegoalonsonm/index.json" />
@@ -52,8 +51,8 @@ jobs:
                   <add key="ClearTextPassword" value="${{ secrets.PACKAGE_TOKEN }}" />
                 </github>
               </packageSourceCredentials>
-            </configuration>
-            EOF
+            </configuration>' > NuGet.config
+
 
       - name: Restore dependencies using NuGet.config
         run: dotnet restore Seguridad.sln --configfile NuGet.config
