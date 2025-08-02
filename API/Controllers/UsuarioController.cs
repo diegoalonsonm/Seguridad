@@ -26,7 +26,7 @@ namespace API.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost]
+        [HttpPost("RegistrarUsuario")]
         public async Task<IActionResult> PostAsync([FromBody] Usuario usuario)
         {
             return Ok(await _usuarioBW.RegistrarUsuario(usuario));
