@@ -4,7 +4,6 @@ env:
   AZURE_WEBAPP_NAME: apiSeguridad
   AZURE_WEBAPP_PACKAGE_PATH: './API'
   DOTNET_VERSION: '8.0'
-  GITHUB_TOKEN: ${{ secrets.PACKAGE_TOKEN }}  # Token para acceder a GitHub Packages
 
 on:
   push:
@@ -19,7 +18,9 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+    environment:
+      name: 'Production-Database'
+
     steps:
       - uses: actions/checkout@v4
 
@@ -36,6 +37,24 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nuget-
 
+      - name: Generate dynamic NuGet.config with GitHub Packages credentials
+        run: |
+          cat > NuGet.config <<EOF
+            <?xml version="1.0" encoding="utf-8"?>
+            <configuration>
+              <packageSources>
+                <add key="github" value="https://nuget.pkg.github.com/diegoalonsonm/index.json" />
+                <add key="nuget.org" value="https://api.nuget.org/v3/index.json" />
+              </packageSources>
+              <packageSourceCredentials>
+                <github>
+                  <add key="Username" value="diegoalonsonm" />
+                  <add key="ClearTextPassword" value="${{ secrets.PACKAGE_TOKEN }}" />
+                </github>
+              </packageSourceCredentials>
+            </configuration>
+            EOF
+
       - name: Restore dependencies using NuGet.config
         run: dotnet restore Seguridad.sln --configfile NuGet.config
 
@@ -48,7 +67,7 @@ jobs:
           dotnet build DA/DA.csproj --configuration Release --no-restore
           dotnet build Helpers/Helpers.csproj --configuration Release --no-restore
 
-      - name: Run tests (excluding BD project)
+      - name: Run tests (optional)
         run: |
           dotnet test API/API.csproj --no-restore --verbosity normal --configuration Release || echo "No tests found or test execution failed"
 
