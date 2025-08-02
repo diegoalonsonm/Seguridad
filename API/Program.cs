@@ -15,7 +15,14 @@ using Autorizacion.Abstracciones.BW;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Configuration
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .AddEnvironmentVariables();
+
+var connectionString = builder.Configuration.GetConnectionString("Seguridad");
+
+var jwtSecret = builder.Configuration["Token:key"];
 
 TokenConfig tokenConfiguration = builder.Configuration.GetSection("Token").Get<TokenConfig>();
 string jwtIssuer = tokenConfiguration.Issuer;
