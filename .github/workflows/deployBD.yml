@@ -4,6 +4,7 @@ env:
   AZURE_SQL_SERVER: sqlserverdanm.database.windows.net
   AZURE_SQL_DATABASE: seguridad
   DACPAC_PATH: 'BD/bin/Release/BD.dacpac'
+  PACKAGE_TOKEN: ${{ secrets.PACKAGE_TOKEN }}
 
 on:
   push:
@@ -31,7 +32,7 @@ jobs:
         uses: NuGet/setup-nuget@v1
 
       - name: Restore NuGet packages
-        run: nuget restore "Seguridad.sln"
+        run: nuget restore "Seguridad.sln" -ConfigFile NuGet.config
 
       - name: Build Database Project
         run: |
