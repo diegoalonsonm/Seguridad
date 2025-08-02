@@ -18,6 +18,8 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment:
+      name: 'Production-Database'
 
     steps:
       - uses: actions/checkout@v4
@@ -34,6 +36,11 @@ jobs:
           key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
           restore-keys: |
             ${{ runner.os }}-nuget-
+
+      - name: Add GitHub Packages NuGet source
+        run: |
+          dotnet nuget add source "https://nuget.pkg.github.com/diegoalonsonm/index.json" \
+            --name "paquetes" --username diegoalonsonm --password ${{ secrets.PACKAGE_TOKEN }} --store-password-in-clear-text
 
       - name: Restore dependencies
         run: |
