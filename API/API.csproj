@@ -9,8 +9,9 @@
   <ItemGroup>
     <PackageReference Include="Autorizacion.Abstracciones" Version="1.0.2" />
     <PackageReference Include="Autorizacion.BW" Version="1.0.1" />
-    <PackageReference Include="Autorizacion.DA" Version="1.0.1" />
+    <PackageReference Include="Autorizacion.DA" Version="1.0.2" />
     <PackageReference Include="Autorizacion.Middleware" Version="1.0.2" />
+    <PackageReference Include="Helpers" Version="1.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.3" />
