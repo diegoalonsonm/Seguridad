@@ -20,25 +20,25 @@ namespace DA
         public async Task<IEnumerable<Perfil>> ObtenerPerfilesPorUsuario(Usuario usuario)
         {
             string sqlQuery = @"[ObtenerPerfilesPorUsuario]";
-            var consulta = await _conexion.QueryAsync<Abstracciones.Entidades.Perfil>(sqlQuery, new
+            var consulta = await _conexion.QueryAsync<Perfil>(sqlQuery, new
             {
                 correo = usuario.correo,
                 nombre = usuario.nombre,
             });
 
-            return Convertidor.ConvertirLista<Abstracciones.Entidades.Perfil, Abstracciones.Modelos.Perfil>(consulta);
+            return consulta;
         }
 
         public async Task<Usuario> ObtenerUsuario(Usuario usuario)
         {
             string sqlQuery = @"[ObtenerUsuario]";
-            var consulta = await _conexion.QueryAsync<Abstracciones.Entidades.Usuario>(sqlQuery, new
+            var consulta = await _conexion.QueryAsync<Usuario>(sqlQuery, new
             {
                 correo = usuario.correo,
                 nombre = usuario.nombre
             });
 
-            return Convertidor.Convertir<Abstracciones.Entidades.Usuario, Abstracciones.Modelos.Usuario>(consulta.FirstOrDefault());
+            return consulta.FirstOrDefault();
         }
 
         public async Task<Guid> RegistrarUsuario(Usuario usuario)
