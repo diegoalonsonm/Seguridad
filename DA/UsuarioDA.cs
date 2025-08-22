@@ -22,8 +22,7 @@ namespace DA
             string sqlQuery = @"[ObtenerPerfilesPorUsuario]";
             var consulta = await _conexion.QueryAsync<Perfil>(sqlQuery, new
             {
-                correo = usuario.correo,
-                nombre = usuario.nombre,
+                correo = usuario.correo
             });
 
             return consulta;
@@ -32,13 +31,12 @@ namespace DA
         public async Task<Usuario> ObtenerUsuario(Usuario usuario)
         {
             string sqlQuery = @"[ObtenerUsuario]";
-            var consulta = await _conexion.QueryAsync<Usuario>(sqlQuery, new
+            var consulta = await _conexion.QueryAsync<Abstracciones.Entidades.Usuario>(sqlQuery, new
             {
-                correo = usuario.correo,
-                nombre = usuario.nombre
+                correo = usuario.correo
             });
 
-            return consulta.FirstOrDefault();
+            return Convertidor.Convertir<Abstracciones.Entidades.Usuario, Abstracciones.Modelos.Usuario>(consulta.FirstOrDefault());
         }
 
         public async Task<Guid> RegistrarUsuario(Usuario usuario)

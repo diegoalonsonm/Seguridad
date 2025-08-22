@@ -12,8 +12,7 @@ namespace Abstracciones.Modelos
         [Required]
         public Guid idUsuario { get; set; }
 
-        [Required]
-        public string nombre { get; set; }
+        public string? nombre { get; set; }
 
         [Required]
         public string passwordHash { get; set; }

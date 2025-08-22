@@ -48,9 +48,14 @@ namespace BC
         {
             Usuario usuario = await _usuarioDA.ObtenerUsuario(new Usuario
             {
-                nombre = login.nombre,
                 correo = login.correo
             });
+            
+            if (usuario == null)
+                return false;
+                
+            login.nombre = usuario.nombre;
+            login.idUsuario = usuario.idUsuario;
             
             return (login != null && login.passwordHash == usuario.passwordHash);
         }
@@ -76,7 +81,7 @@ namespace BC
         {
             List<Claim> claims = new List<Claim>();
             claims.Add(new Claim("usuario", login.nombre));
-            claims.Add(new Claim("servicio", login.IdServicio.ToString()));
+            claims.Add(new Claim("correo", login.correo));
 
             IEnumerable<Perfil> perfiles = await ObtenerPerfiles(login);
 
