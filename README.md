@@ -76,7 +76,7 @@ La API estará disponible usualmente en `https://localhost:5001` o el puerto con
 
 #### 3. Autenticación (Login)
 
-- **Ruta:** `POST /api/Autenticacion`
+- **Ruta:** `POST /api/Autenticacion/login`
 - **Acceso:** Público
 - **Descripción:** Autentica al usuario y devuelve un token JWT.
 - **Cuerpo de la petición:**
@@ -202,7 +202,7 @@ The API will usually be available at `https://localhost:5001` or the configured 
 
 #### 3. Authentication (Login)
 
-- **Route:** `POST /api/Autenticacion`
+- **Route:** `POST /api/Autenticacion/login`
 - **Access:** Public
 - **Description:** Authenticates the user and returns a JWT token.
 - **Request body:**
