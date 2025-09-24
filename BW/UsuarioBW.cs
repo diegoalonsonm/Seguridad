@@ -27,5 +27,10 @@ namespace BW
         {
             return await _usuarioDA.RegistrarUsuario(usuario);
         }
+
+        public async Task<bool> ResetearPassword(ResetPassword resetPassword)
+        {
+            return await _usuarioDA.ResetearPassword(resetPassword);
+        }
     }
 }

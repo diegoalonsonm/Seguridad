@@ -103,5 +103,10 @@ namespace BC
                 correo = login.correo
             });
         }
+
+        public async Task<bool> ResetearPasswordAsync(ResetPassword resetPassword)
+        {
+            return await _usuarioDA.ResetearPassword(resetPassword);
+        }
     }
 }

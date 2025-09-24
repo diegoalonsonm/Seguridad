@@ -10,5 +10,6 @@ namespace Abstracciones.BC
     public interface IAutenticacionBC
     {
         Task<Token> LoginAsync(Login login);
+        Task<bool> ResetearPasswordAsync(ResetPassword resetPassword);
     }
 }

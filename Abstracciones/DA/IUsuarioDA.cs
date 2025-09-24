@@ -9,5 +9,7 @@ namespace Abstracciones.DA
         Task<IEnumerable<Perfil>> ObtenerPerfilesPorUsuario(Usuario usuario);
 
         Task<Guid> RegistrarUsuario(Usuario usuario);
+
+        Task<bool> ResetearPassword(ResetPassword resetPassword);
     }
 }

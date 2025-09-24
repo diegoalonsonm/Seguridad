@@ -1,4 +1,5 @@
 ﻿using Abstracciones.API;
+using Abstracciones.BC;
 using Abstracciones.BW;
 using Abstracciones.Modelos;
 using Microsoft.AspNetCore.Authorization;
@@ -12,10 +13,12 @@ namespace API.Controllers
     public class AutenticacionController : Controller, IAutenticacionController
     {
         private IAutenticacionBW _autenticacionBW;
+        private IAutenticacionBC _autenticacionBC;
 
-        public AutenticacionController(IAutenticacionBW autenticacionBW)
+        public AutenticacionController(IAutenticacionBW autenticacionBW, IAutenticacionBC autenticacionBC)
         {
             _autenticacionBW = autenticacionBW;
+            _autenticacionBC = autenticacionBC;
         }
 
         [AllowAnonymous]
@@ -23,6 +26,13 @@ namespace API.Controllers
         public async Task<IActionResult> PostAsync([FromBody] Login login)
         {
             return Ok(await _autenticacionBW.LoginAsync(login));
+        }
+
+        [AllowAnonymous]
+        [HttpPost("ResetearPassword")]
+        public async Task<IActionResult> ResetearPasswordAsync([FromBody] ResetPassword resetPassword)
+        {
+            return Ok(await _autenticacionBC.ResetearPasswordAsync(resetPassword));
         }
     }
 }

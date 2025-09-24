@@ -11,5 +11,6 @@ namespace Abstracciones.API
     public interface IAutenticacionController
     {
         Task<IActionResult> PostAsync([FromBody] Login login);
+        Task<IActionResult> ResetearPasswordAsync([FromBody] ResetPassword resetPassword);
     }
 }
