@@ -11,5 +11,6 @@ namespace Abstracciones.BW
     {
         Task<Guid> RegistrarUsuario(Usuario usuario);
         Task<Usuario> ObtenerUsuario(Usuario usuario);
+        Task<bool> ResetearPassword(ResetPassword resetPassword);
     }
 }

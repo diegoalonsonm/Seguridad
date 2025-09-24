@@ -51,5 +51,17 @@ namespace DA
 
             return consulta;
         }
+
+        public async Task<bool> ResetearPassword(ResetPassword resetPassword)
+        {
+            string sql = @"[ResetearPassword]";
+            var resultado = await _conexion.QueryAsync<dynamic>(sql, new
+            {
+                correo = resetPassword.correo,
+                nuevoPasswordHash = resetPassword.nuevoPasswordHash
+            });
+
+            return resultado.FirstOrDefault()?.Exitoso == 1;
+        }
     }
 }
