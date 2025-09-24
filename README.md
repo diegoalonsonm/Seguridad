@@ -4,7 +4,7 @@
 
 ### Introducción
 
-Esta API está diseñada para gestionar usuarios y autenticación utilizando JWT en .NET. Incluye endpoints para registrar usuarios, obtener usuarios, obtener perfiles de usuario y autenticarse, con roles y protección de rutas.
+Esta API está diseñada para gestionar usuarios y autenticación utilizando JWT en .NET. Incluye endpoints para registrar usuarios, obtener usuarios, obtener perfiles de usuario, autenticarse y resetear contraseñas, con roles y protección de rutas.
 
 ---
 
@@ -97,7 +97,23 @@ La API estará disponible usualmente en `https://localhost:5001` o el puerto con
 
 ---
 
-#### 4. Obtener Perfiles por Usuario
+#### 4. Resetear Contraseña
+
+- **Ruta:** `POST /api/Autenticacion/ResetearPassword`
+- **Acceso:** Público (no requiere autenticación)
+- **Descripción:** Permite resetear la contraseña de un usuario utilizando su correo electrónico.
+- **Cuerpo de la petición:**
+  ```json
+  {
+    "correo": "correo@dominio.com",
+    "nuevoPasswordHash": "nueva_contraseña_hasheada"
+  }
+  ```
+- **Respuesta:** `true` si el reseteo fue exitoso, `false` si falló (usuario no encontrado).
+
+---
+
+#### 5. Obtener Perfiles por Usuario
 
 - **Método interno usado en autenticación**
 - **Descripción:** Retorna los perfiles (roles) que tiene el usuario.
@@ -118,6 +134,10 @@ La API estará disponible usualmente en `https://localhost:5001` o el puerto con
    - Realiza un `POST /api/Usuario/ObtenerUsuario` con el modelo del usuario.
    - Incluye el token recibido en el encabezado de autorización.
 
+4. **Resetear Contraseña** (Opcional)
+   - Realiza un `POST /api/Autenticacion/ResetearPassword` con el correo y la nueva contraseña hasheada.
+   - No requiere autenticación previa.
+
 ---
 
 ### Documentación Interactiva
@@ -130,7 +150,7 @@ La API estará disponible usualmente en `https://localhost:5001` o el puerto con
 
 ### Introduction
 
-This API is designed for user management and authentication using JWT in .NET. It includes endpoints to register users, get users, get user profiles, and authenticate, with roles and route protection.
+This API is designed for user management and authentication using JWT in .NET. It includes endpoints to register users, get users, get user profiles, authenticate, and reset passwords, with roles and route protection.
 
 ---
 
@@ -223,7 +243,23 @@ The API will usually be available at `https://localhost:5001` or the configured 
 
 ---
 
-#### 4. Get Profiles by User
+#### 4. Reset Password
+
+- **Route:** `POST /api/Autenticacion/ResetearPassword`
+- **Access:** Public (no authentication required)
+- **Description:** Allows resetting a user's password using their email address.
+- **Request body:**
+  ```json
+  {
+    "correo": "email@domain.com",
+    "nuevoPasswordHash": "new_hashed_password"
+  }
+  ```
+- **Response:** `true` if reset was successful, `false` if failed (user not found).
+
+---
+
+#### 5. Get Profiles by User
 
 - **Internal method used in authentication**
 - **Description:** Returns the profiles (roles) the user has.
@@ -243,6 +279,10 @@ The API will usually be available at `https://localhost:5001` or the configured 
 3. **Get User**
    - Make a `POST /api/Usuario/ObtenerUsuario` request with the user model.
    - Include the received token in the authorization header.
+
+4. **Reset Password** (Optional)
+   - Make a `POST /api/Autenticacion/ResetearPassword` request with the email and new hashed password.
+   - No prior authentication required.
 
 ---
 

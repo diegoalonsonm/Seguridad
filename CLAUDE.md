@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a .NET 8 security API with JWT authentication for user management and authorization. The API includes endpoints for user registration, authentication, and user retrieval with role-based access control.
+This is a .NET 8 security API with JWT authentication for user management and authorization. The API includes endpoints for user registration, authentication, user retrieval, and password reset functionality with role-based access control.
 
 ## Architecture
 
@@ -71,7 +71,7 @@ msbuild "BD/BD.sqlproj" /p:Configuration=Release /p:Platform="Any CPU" /p:Output
 ## Configuration
 
 ### Database Connection
-Configure the connection string in `appsettings.json` under `ConnectionStrings:Seguridad`.
+Configure the connection string in `appsettings.json` under `ConnectionStrings:Seguridad`. The project supports both Azure SQL Database (production) and local SQL Server (development) connections.
 
 ### JWT Configuration
 JWT settings are configured in `appsettings.json` under the `Token` section:
@@ -85,6 +85,7 @@ JWT settings are configured in `appsettings.json` under the `Token` section:
 - `POST /api/Usuario/RegistrarUsuario` - Public user registration
 - `POST /api/Usuario/ObtenerUsuario` - Get user (requires role 2)
 - `POST /api/Autenticacion/login` - User authentication
+- `POST /api/Autenticacion/ResetearPassword` - Public password reset
 
 ## Testing
 
@@ -116,3 +117,13 @@ Both workflows trigger on pushes to the master branch and support manual dispatc
 - Implements middleware for authorization claims processing
 - JWT tokens are used for stateless authentication
 - Role-based authorization is implemented for protected endpoints
+- Password handling: Passwords are expected to arrive pre-hashed from the client
+- Database operations use stored procedures for data manipulation
+
+## Recent Updates
+
+### Password Reset Feature
+- Added `ResetearPassword` stored procedure in BD project
+- Created `ResetPassword` model in Abstracciones layer
+- Implemented password reset functionality across all layers (DA, BW, BC, API)
+- New endpoint: `POST /api/Autenticacion/ResetearPassword` for public password reset
