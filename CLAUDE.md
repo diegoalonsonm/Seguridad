@@ -71,7 +71,32 @@ msbuild "BD/BD.sqlproj" /p:Configuration=Release /p:Platform="Any CPU" /p:Output
 ## Configuration
 
 ### Database Connection
-Configure the connection string in `appsettings.json` under `ConnectionStrings:Seguridad`. The project supports both Azure SQL Database (production) and local SQL Server (development) connections.
+
+**IMPORTANT: Never commit sensitive connection strings to source control.**
+
+#### Local Development (User Secrets)
+Use .NET User Secrets to store the connection string locally:
+
+```bash
+# Initialize user secrets (already configured)
+dotnet user-secrets init --project API
+
+# Set the connection string
+dotnet user-secrets set "ConnectionStrings:Seguridad" "your-connection-string-here" --project API
+
+# List all secrets
+dotnet user-secrets list --project API
+```
+
+#### Production (Azure Web App)
+Configure the connection string as an environment variable in Azure Portal:
+1. Go to Azure Portal → Your Web App → Configuration → Application Settings
+2. Add a new application setting:
+   - **Name**: `ConnectionStrings__Seguridad` (double underscore)
+   - **Value**: Your production connection string
+3. Save and restart the app
+
+The `Program.cs` file is already configured to read from environment variables via `.AddEnvironmentVariables()`, which automatically overrides `appsettings.json` values.
 
 ### JWT Configuration
 JWT settings are configured in `appsettings.json` under the `Token` section:
